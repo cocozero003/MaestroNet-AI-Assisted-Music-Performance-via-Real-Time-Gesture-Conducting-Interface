@@ -26,4 +26,4 @@ Upload a short conducting video when prompted.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under Jukkapan Wirunrat License.

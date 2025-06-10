@@ -1,0 +1,7 @@
+streamlit
+mediapipe
+numpy
+opencv-python
+scipy
+mido
+python-rtmidi

@@ -1,18 +1,15 @@
-# MaestroNet
+# MaestroNet with Beat Coherence Evaluator
 
-MaestroNet is a real-time AI-assisted music interface that estimates tempo and dynamics from conducting gestures in uploaded videos.
+This version integrates PantoMatrix's BeatCoherence metric to assess alignment between conducting gestures and reference audio.
 
-## Features
-
-- Upload MP4 or MOV video to detect tempo (BPM) and dynamics (pp to ff).
-- Pose estimation with MediaPipe.
-- Tempo estimation via peak detection.
-- Gesture-based dynamic level mapping.
-- MIDI playback at detected tempo and velocity using Mido and python-rtmidi.
-
-## Installation
+## Setup
 
 ```bash
+git submodule add https://github.com/PantoMatrix/PantoMatrix.git third_party/PantoMatrix
+cd third_party/PantoMatrix
+pip install -r requirements.txt
+cd ../..
+
 pip install -r requirements.txt
 ```
 
@@ -22,8 +19,8 @@ pip install -r requirements.txt
 streamlit run app/main.py
 ```
 
-Upload a short conducting video when prompted.
+Upload a conducting video and a reference audio (WAV). The app displays:
+- BPM
+- Dynamics level
+- Beat Coherence score (lower is better)
 
-## License
-
-This project is licensed under Jukkapan Wirunrat License.

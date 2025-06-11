@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.signal import find_peaks
+from scipy.ndimage import uniform_filter1d
 
 def compute_tempo_from_y_series(y_positions, fps=30):
     """
@@ -12,15 +13,10 @@ def compute_tempo_from_y_series(y_positions, fps=30):
     """
     if len(y_positions) < 5:
         return 0.0
-    y = np.array(y_positions)
-    # smooth to reduce jitter
-    from scipy.ndimage import uniform_filter1d
-    y = uniform_filter1d(y, size=3)
-    inverted = -y
-    peaks, _ = find_peaks(inverted, distance=fps * 0.5)
+    y = uniform_filter1d(np.array(y_positions), size=3)
+    peaks, _ = find_peaks(-y, distance=fps*0.5)
     if len(peaks) < 2:
         return 0.0
     intervals = np.diff(peaks) / fps
-    avg_interval = np.mean(intervals)
-    bpm = 60.0 / avg_interval
+    bpm = 60.0 / np.mean(intervals)
     return round(bpm, 2)

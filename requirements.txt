@@ -5,3 +5,5 @@ opencv-python
 scipy
 mido
 python-rtmidi
+# After adding PantoMatrix:
+# pip install -r third_party/PantoMatrix/requirements.txt

@@ -4,7 +4,7 @@ from core.dynamics_mapper import map_dynamics_from_gesture
 
 def process_video_for_bpm(video_file, fps=30):
     """
-    Process uploaded video to estimate BPM and dynamic level.
+    Process video to estimate BPM and dynamic level.
     Returns:
         tuple: (bpm, dynamic_level)
     """

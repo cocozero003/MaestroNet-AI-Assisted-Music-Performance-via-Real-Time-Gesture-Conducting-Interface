@@ -9,14 +9,13 @@ def get_wrist_y_series(video_file, hand="RIGHT"):
     Extract Y-axis positions of the specified wrist from a video input.
     Args:
         video_file: Streamlit uploaded file object.
-        hand (str): "RIGHT" or "LEFT" wrist.
+        hand (str): "RIGHT" or "LEFT".
     Returns:
         list of float: Normalized Y positions over time.
     """
-    if not video_file.type.startswith("video/"):
-        raise ValueError("Unsupported file type")
+    if not hasattr(video_file, "read"):
+        raise ValueError("Invalid video input")
 
-    # Save to temporary file for OpenCV
     temp = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
     temp.write(video_file.read())
     temp.flush()
@@ -26,13 +25,13 @@ def get_wrist_y_series(video_file, hand="RIGHT"):
     wrist_y = []
 
     wrist_idx = (
-        mp_pose.PoseLandmark.RIGHT_WRIST if hand.upper() == "RIGHT"
+        mp_pose.PoseLandmark.RIGHT_WRIST if hand.upper()=="RIGHT"
         else mp_pose.PoseLandmark.LEFT_WRIST
     )
 
-    while cap.isOpened():
-        success, frame = cap.read()
-        if not success:
+    while True:
+        ret, frame = cap.read()
+        if not ret:
             break
         frame = cv2.resize(frame, (640, 480))
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
